@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}History - HDI Predictor{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card card-premium p-4 border-dark-glow">
+            <div class="card-header-premium d-flex flex-column flex-sm-row justify-content-between align-items-sm-center border-bottom border-dark-glow pb-3 mb-4">
+                <div>
+                    <h3 class="fw-bold tracking-wide mb-1"><i class="fa-solid fa-clock-rotate-left text-teal me-2"></i> PREDICTION HISTORY</h3>
+                    <p class="text-secondary small mb-0">Review all previously simulated development profiles associated with your account</p>
+                </div>
+                <a href="{{ url_for('main.predict') }}" class="btn btn-teal btn-sm mt-3 mt-sm-0" id="history-btn-new-predict">
+                    <i class="fa-solid fa-plus me-1"></i> New Prediction
+                </a>
+            </div>
+
+            <div class="card-body">
+                {% if history %}
+                    <div class="table-responsive">
+                        <table class="table table-premium align-middle text-start">
+                            <thead>
+                                <tr>
+                                    <th>Date &amp; Time</th>
+                                    <th>Life Expectancy</th>
+                                    <th>Mean Schooling</th>
+                                    <th>Expected Schooling</th>
+                                    <th>GNI per Capita</th>
+                                    <th>Predicted HDI</th>
+                                    <th>Category</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in history %}
+                                    <tr>
+                                        <td class="text-secondary small">{{ item.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                        <td><strong>{{ item.life_expectancy }}</strong> <span class="text-muted small">Yrs</span></td>
+                                        <td><strong>{{ item.mean_years_schooling }}</strong> <span class="text-muted small">Yrs</span></td>
+                                        <td><strong>{{ item.expected_years_schooling }}</strong> <span class="text-muted small">Yrs</span></td>
+                                        <td><strong>${{ "{:,.2f}".format(item.gni_per_capita) }}</strong></td>
+                                        <td class="text-teal font-semibold">{{ "%.4f"|format(item.predicted_hdi) }}</td>
+                                        <td>
+                                            {% if item.hdi_category == 'Very High' %}
+                                                <span class="badge badge-hdi badge-very-high"><i class="fa-solid fa-circle-check"></i> Very High</span>
+                                            {% elif item.hdi_category == 'High' %}
+                                                <span class="badge badge-hdi badge-high"><i class="fa-solid fa-circle-chevron-up"></i> High</span>
+                                            {% elif item.hdi_category == 'Medium' %}
+                                                <span class="badge badge-hdi badge-medium"><i class="fa-solid fa-circle-dot"></i> Medium</span>
+                                            {% else %}
+                                                <span class="badge badge-hdi badge-low"><i class="fa-solid fa-circle-chevron-down"></i> Low</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="fa-solid fa-receipt text-muted fs-1 mb-3"></i>
+                        <p class="text-secondary">No predictions recorded yet.</p>
+                        <a href="{{ url_for('main.predict') }}" class="btn btn-teal">Run First Prediction</a>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="card-footer border-top border-dark-glow pt-3 text-start">
+                <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-teal btn-sm" id="history-btn-back">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

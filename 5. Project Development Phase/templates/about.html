@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}About Project - HDI Predictor{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <!-- Main About Information -->
+    <div class="col-lg-7">
+        <div class="card card-premium p-4 border-dark-glow mb-4">
+            <h3 class="fw-bold tracking-wide text-teal border-bottom border-dark-glow pb-2 mb-3">
+                <i class="fa-solid fa-graduation-cap me-2"></i> WHAT IS THE HUMAN DEVELOPMENT INDEX?
+            </h3>
+            <p class="text-secondary small">
+                The **Human Development Index (HDI)** is a summary composite measure introduced by the United Nations Development Programme (UNDP) in 1990. It was created to emphasize that people and their capabilities should be the ultimate criteria for assessing the development of a country, rather than economic growth alone.
+            </p>
+            <p class="text-secondary small">
+                The HDI ranges from **0.000 to 1.000** and represents the geometric mean of normalized indices for three key dimensions of human development:
+            </p>
+            <ul class="text-muted small">
+                <li><strong>Long and healthy life:</strong> Assessed by life expectancy at birth.</li>
+                <li><strong>Knowledge:</strong> Assessed by expected years of schooling for children and mean years of schooling for adults.</li>
+                <li><strong>Decent standard of living:</strong> Assessed by Gross National Income (GNI) per capita (PPP$).</li>
+            </ul>
+        </div>
+
+        <div class="card card-premium p-4 border-dark-glow mb-4">
+            <h4 class="fw-bold tracking-wide text-teal border-bottom border-dark-glow pb-2 mb-3">
+                <i class="fa-solid fa-gears me-2"></i> MACHINE LEARNING WORKFLOW
+            </h4>
+            <p class="text-secondary small">
+                This project represents a complete, end-to-end data science and machine learning pipeline integrated into a web interface:
+            </p>
+            
+            <div class="row g-2 text-start small">
+                <div class="col-sm-6 mb-2">
+                    <span class="text-teal-light fw-bold">1. Data Cleaning &amp; Preprocessing</span>
+                    <p class="text-muted mb-0" style="font-size: 0.8rem;">Duplicates removed, missing variables interpolated, and features standardized.</p>
+                </div>
+                <div class="col-sm-6 mb-2">
+                    <span class="text-teal-light fw-bold">2. Feature Scaling</span>
+                    <p class="text-muted mb-0" style="font-size: 0.8rem;">`StandardScaler` applied to prevent skewness from GNI scale differences.</p>
+                </div>
+                <div class="col-sm-6 mb-2">
+                    <span class="text-teal-light fw-bold">3. Model Training</span>
+                    <p class="text-muted mb-0" style="font-size: 0.8rem;">A Linear Regression model is trained using an 80/20 train-test split.</p>
+                </div>
+                <div class="col-sm-6 mb-2">
+                    <span class="text-teal-light fw-bold">4. Flask Integration &amp; DB logs</span>
+                    <p class="text-muted mb-0" style="font-size: 0.8rem;">The serialized model predicts HDI scores on forms input and saves results in SQLite.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-premium p-4 border-dark-glow">
+            <h4 class="fw-bold tracking-wide text-teal border-bottom border-dark-glow pb-2 mb-3">
+                <i class="fa-solid fa-code me-2"></i> TECHNOLOGY STACK
+            </h4>
+            <div class="d-flex flex-wrap gap-2 text-start">
+                <span class="badge bg-dark-glass border-secondary text-white">Python 3.x</span>
+                <span class="badge bg-dark-glass border-secondary text-white">Flask</span>
+                <span class="badge bg-dark-glass border-secondary text-white">SQLite3</span>
+                <span class="badge bg-dark-glass border-secondary text-white">Scikit-learn</span>
+                <span class="badge bg-dark-glass border-secondary text-white">Pandas</span>
+                <span class="badge bg-dark-glass border-secondary text-white">NumPy</span>
+                <span class="badge bg-dark-glass border-secondary text-white">Matplotlib &amp; Seaborn</span>
+                <span class="badge bg-dark-glass border-secondary text-white">Bootstrap 5</span>
+                <span class="badge bg-dark-glass border-secondary text-white">HTML5 / CSS3 / JS</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visualizations Display -->
+    <div class="col-lg-5">
+        <div class="card card-premium p-4 border-dark-glow mb-4">
+            <h4 class="fw-bold tracking-wide text-teal border-bottom border-dark-glow pb-2 mb-3">
+                <i class="fa-solid fa-chart-bar me-2"></i> DATA VISUALIZATIONS
+            </h4>
+            <p class="text-secondary small mb-3">Below are the statistical charts generated by the training script based on the historical training dataset:</p>
+            
+            <!-- Tabbed Plots or Scrollable list -->
+            <div class="d-flex flex-column gap-4">
+                <div>
+                    <h6 class="text-teal-light mb-1 small">1. HDI Score Distribution</h6>
+                    <img src="{{ url_for('static', filename='plots/hdi_distribution.png') }}" alt="HDI Distribution" class="plot-img">
+                </div>
+                <div>
+                    <h6 class="text-teal-light mb-1 small">2. Correlation Heatmap</h6>
+                    <img src="{{ url_for('static', filename='plots/correlation_heatmap.png') }}" alt="Correlation Heatmap" class="plot-img">
+                </div>
+                <div>
+                    <h6 class="text-teal-light mb-1 small">3. HDI Category Distribution</h6>
+                    <img src="{{ url_for('static', filename='plots/hdi_category_distribution.png') }}" alt="HDI Category Distribution" class="plot-img">
+                </div>
+                <div>
+                    <h6 class="text-teal-light mb-1 small">4. GNI per Capita vs HDI Score</h6>
+                    <img src="{{ url_for('static', filename='plots/gni_vs_hdi.png') }}" alt="GNI per Capita vs HDI" class="plot-img">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

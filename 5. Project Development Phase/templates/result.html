@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction Result - HDI Predictor{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-9 col-lg-7">
+        <div class="card card-premium p-4 border-dark-glow">
+            <div class="card-header-premium text-center">
+                <i class="fa-solid fa-chart-line text-teal fs-2 mb-3"></i>
+                <h3 class="fw-bold tracking-wide mb-1">PREDICTION RESULT</h3>
+                <p class="text-secondary small">Model calculations based on submitted metrics</p>
+            </div>
+            
+            <div class="card-body text-center py-4">
+                <!-- Glowing Score Dial -->
+                <div class="d-inline-flex flex-column align-items-center justify-content-center p-4 mb-4 border border-teal-glow rounded-circle shadow-lg" style="width: 200px; height: 200px; background: rgba(20, 184, 166, 0.03);">
+                    <small class="text-secondary text-uppercase tracking-wider">Estimated HDI</small>
+                    <span class="display-4 fw-bold text-teal my-1">{{ "%.4f"|format(predicted_hdi) }}</span>
+                    
+                    {% if hdi_category == 'Very High' %}
+                        <span class="badge badge-hdi badge-very-high"><i class="fa-solid fa-circle-check"></i> Very High</span>
+                    {% elif hdi_category == 'High' %}
+                        <span class="badge badge-hdi badge-high"><i class="fa-solid fa-circle-chevron-up"></i> High</span>
+                    {% elif hdi_category == 'Medium' %}
+                        <span class="badge badge-hdi badge-medium"><i class="fa-solid fa-circle-dot"></i> Medium</span>
+                    {% else %}
+                        <span class="badge badge-hdi badge-low"><i class="fa-solid fa-circle-chevron-down"></i> Low</span>
+                    {% endif %}
+                </div>
+
+                <!-- Interpretation Statement -->
+                <div class="p-3 bg-dark-glass border border-dark-glow rounded-3 mb-4 text-start">
+                    <h5 class="fw-bold text-teal-light mb-2"><i class="fa-solid fa-circle-info me-2"></i> Development Interpretation</h5>
+                    <p class="mb-0 text-secondary small">
+                        {% if hdi_category == 'Very High' %}
+                            <strong>Very High Human Development:</strong> Strong performance in health, education, and income indicators. Countries in this tier demonstrate high life expectancies, extensive school systems, and robust GNI per Capita averages.
+                        {% elif hdi_category == 'High' %}
+                            <strong>High Human Development:</strong> Good overall development with opportunities for further improvement. Key indicators show consistent positive development, though gaps remain in higher education access or specialized wealth distribution.
+                        {% elif hdi_category == 'Medium' %}
+                            <strong>Medium Human Development:</strong> Moderate development with important opportunities for improvement. Countries typically display developing industrial sectors, improving healthcare, but face challenges in education access and standard of living metrics.
+                        {% else %}
+                            <strong>Low Human Development:</strong> Significant development challenges requiring focused improvements. Indicates crucial vulnerability gaps in medical availability, public school infrastructure, and economic support mechanisms.
+                        {% endif %}
+                    </p>
+                </div>
+
+                <!-- Input parameters review table -->
+                <div class="table-responsive mb-4 text-start">
+                    <table class="table table-bordered border-dark-glow text-white small">
+                        <thead>
+                            <tr class="bg-dark-glass">
+                                <th class="text-teal">Indicator</th>
+                                <th class="text-teal">Entered Value</th>
+                                <th class="text-teal">Dimension</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Life Expectancy</td>
+                                <td><strong>{{ life_expectancy }} Years</strong></td>
+                                <td>Health</td>
+                            </tr>
+                            <tr>
+                                <td>Mean Years of Schooling</td>
+                                <td><strong>{{ mean_years_schooling }} Years</strong></td>
+                                <td>Education</td>
+                            </tr>
+                            <tr>
+                                <td>Expected Years of Schooling</td>
+                                <td><strong>{{ expected_years_schooling }} Years</strong></td>
+                                <td>Education</td>
+                            </tr>
+                            <tr>
+                                <td>Gross National Income (GNI) per Capita</td>
+                                <td><strong>${{ "{:,.2f}".format(gni_per_capita) }}</strong></td>
+                                <td>Standard of Living</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Actions -->
+                <div class="row">
+                    <div class="col-sm-6 mb-2 mb-sm-0">
+                        <a href="{{ url_for('main.predict') }}" class="btn btn-outline-teal w-100" id="result-btn-predict-again">
+                            <i class="fa-solid fa-arrow-left me-2"></i> Predict Again
+                        </a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="{{ url_for('main.dashboard') }}" class="btn btn-teal w-100" id="result-btn-dashboard">
+                            <i class="fa-solid fa-chart-line me-2"></i> Go to Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

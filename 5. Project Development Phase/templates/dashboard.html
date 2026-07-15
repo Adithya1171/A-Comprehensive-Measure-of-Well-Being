@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - HDI Predictor{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card card-premium p-4 border-dark-glow">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+                <div>
+                    <h2 class="fw-bold mb-1">Welcome back, <span class="text-teal">{{ user_name }}</span>!</h2>
+                    <p class="text-secondary mb-0">Monitor your prediction statistics and simulate country indices below.</p>
+                </div>
+                <div class="mt-3 mt-md-0 d-flex gap-2">
+                    <a href="{{ url_for('main.predict') }}" class="btn btn-teal" id="dash-btn-predict">
+                        <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Predict HDI
+                    </a>
+                    <a href="{{ url_for('main.history') }}" class="btn btn-outline-teal" id="dash-btn-history">
+                        <i class="fa-solid fa-history me-2"></i> View History
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Model Specification & Quick Stats Grid -->
+<div class="row g-4 mb-4">
+    <!-- Model Card -->
+    <div class="col-lg-3 col-md-6">
+        <div class="card card-premium p-3 h-100 border-dark-glow dash-card">
+            <small class="text-muted text-uppercase tracking-wider">Prediction Model</small>
+            <h4 class="fw-bold my-2">Linear Regression</h4>
+            <span class="text-secondary small">Scale-invariant regression algorithm optimized with gradient coefficients.</span>
+        </div>
+    </div>
+    <!-- Features Card -->
+    <div class="col-lg-3 col-md-6">
+        <div class="card card-premium p-3 h-100 border-dark-glow dash-card">
+            <small class="text-muted text-uppercase tracking-wider">Input Features</small>
+            <h4 class="fw-bold my-2">4 Indicators</h4>
+            <span class="text-secondary small">Health (1), Education (2), and Gross National Income per Capita (1).</span>
+        </div>
+    </div>
+    <!-- Target Card -->
+    <div class="col-lg-3 col-md-6">
+        <div class="card card-premium p-3 h-100 border-dark-glow dash-card">
+            <small class="text-muted text-uppercase tracking-wider">Output Target</small>
+            <h4 class="fw-bold my-2">HDI Score</h4>
+            <span class="text-secondary small">Numerical score between 0.0000 and 1.0000 predicting development status.</span>
+        </div>
+    </div>
+    <!-- Categories Card -->
+    <div class="col-lg-3 col-md-6">
+        <div class="card card-premium p-3 h-100 border-dark-glow dash-card">
+            <small class="text-muted text-uppercase tracking-wider">HDI Categories</small>
+            <h4 class="fw-bold my-2">4 Tiers</h4>
+            <span class="text-secondary small">Low (&lt;0.55), Medium (0.55-0.70), High (0.70-0.80), and Very High (&ge;0.80).</span>
+        </div>
+    </div>
+</div>
+
+<!-- User Stats and Recent Logs -->
+<div class="row g-4">
+    <!-- User Activity Card -->
+    <div class="col-lg-6">
+        <div class="card card-premium h-100 p-4 border-dark-glow">
+            <h5 class="fw-bold mb-4 border-bottom border-dark-glow pb-2"><i class="fa-solid fa-chart-pie text-teal me-2"></i> YOUR SIMULATION RUNS</h5>
+            <div class="row align-items-center">
+                <div class="col-sm-5 text-center mb-3 mb-sm-0">
+                    <div class="border border-secondary border-3 rounded-circle d-inline-flex flex-column align-items-center justify-content-center" style="width: 130px; height: 130px;">
+                        <span class="display-5 fw-bold text-teal">{{ total_predictions }}</span>
+                        <span class="text-muted text-uppercase small" style="font-size: 0.7rem;">Simulations</span>
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <h6 class="text-secondary mb-3">Category Distribution:</h6>
+                    <!-- Category Breakdown Bars -->
+                    <div class="mb-2">
+                        <div class="d-flex justify-content-between small text-muted mb-1">
+                            <span>Very High Development</span>
+                            <span class="text-teal fw-semibold">{{ very_high }}</span>
+                        </div>
+                        <div class="progress bg-secondary" style="height: 6px;">
+                            <div class="progress-bar bg-success" style="width: {% if total_predictions > 0 %}{{ (very_high/total_predictions)*100 }}{% else %}0{% endif %}%;"></div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="d-flex justify-content-between small text-muted mb-1">
+                            <span>High Development</span>
+                            <span class="text-teal fw-semibold">{{ high }}</span>
+                        </div>
+                        <div class="progress bg-secondary" style="height: 6px;">
+                            <div class="progress-bar bg-info" style="width: {% if total_predictions > 0 %}{{ (high/total_predictions)*100 }}{% else %}0{% endif %}%;"></div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="d-flex justify-content-between small text-muted mb-1">
+                            <span>Medium Development</span>
+                            <span class="text-teal fw-semibold">{{ medium }}</span>
+                        </div>
+                        <div class="progress bg-secondary" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: {% if total_predictions > 0 %}{{ (medium/total_predictions)*100 }}{% else %}0{% endif %}%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="d-flex justify-content-between small text-muted mb-1">
+                            <span>Low Development</span>
+                            <span class="text-teal fw-semibold">{{ low }}</span>
+                        </div>
+                        <div class="progress bg-secondary" style="height: 6px;">
+                            <div class="progress-bar bg-danger" style="width: {% if total_predictions > 0 %}{{ (low/total_predictions)*100 }}{% else %}0{% endif %}%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Latest Prediction Summary -->
+    <div class="col-lg-6">
+        <div class="card card-premium h-100 p-4 border-dark-glow">
+            <h5 class="fw-bold mb-4 border-bottom border-dark-glow pb-2"><i class="fa-solid fa-clock-rotate-left text-teal me-2"></i> LATEST PREDICTION</h5>
+            {% if latest_prediction %}
+                <div class="p-3 bg-dark-glass border border-dark-glow rounded-3 text-start">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-secondary small">{{ latest_prediction.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</span>
+                        {% if latest_prediction.hdi_category == 'Very High' %}
+                            <span class="badge badge-hdi badge-very-high"><i class="fa-solid fa-circle-check"></i> Very High</span>
+                        {% elif latest_prediction.hdi_category == 'High' %}
+                            <span class="badge badge-hdi badge-high"><i class="fa-solid fa-circle-chevron-up"></i> High</span>
+                        {% elif latest_prediction.hdi_category == 'Medium' %}
+                            <span class="badge badge-hdi badge-warning badge-medium"><i class="fa-solid fa-circle-dot"></i> Medium</span>
+                        {% else %}
+                            <span class="badge badge-hdi badge-danger badge-low"><i class="fa-solid fa-circle-chevron-down"></i> Low</span>
+                        {% endif %}
+                    </div>
+                    
+                    <h3 class="fw-bold mb-4">Predicted Score: <span class="text-teal-light">{{ "%.4f"|format(latest_prediction.predicted_hdi) }}</span></h3>
+                    
+                    <div class="row g-2 text-secondary small">
+                        <div class="col-6 mb-2">
+                            <span class="d-block text-muted">Life Expectancy</span>
+                            <span class="text-white fw-medium">{{ latest_prediction.life_expectancy }} Years</span>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <span class="d-block text-muted">Mean Schooling</span>
+                            <span class="text-white fw-medium">{{ latest_prediction.mean_years_schooling }} Years</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="d-block text-muted">Expected Schooling</span>
+                            <span class="text-white fw-medium">{{ latest_prediction.expected_years_schooling }} Years</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="d-block text-muted">GNI per Capita</span>
+                            <span class="text-white fw-medium">${{ "{:,.2f}".format(latest_prediction.gni_per_capita) }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="fa-solid fa-folder-open text-muted fs-1 mb-3"></i>
+                    <p class="text-secondary">No predictions recorded yet.</p>
+                    <a href="{{ url_for('main.predict') }}" class="btn btn-teal btn-sm px-4">Create Your First Prediction</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

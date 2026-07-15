@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Human Development Index Predictor{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="row align-items-center py-5 my-3">
+    <div class="col-lg-6 mb-4 mb-lg-0 text-center text-lg-start">
+        <h1 class="display-4 fw-bold tracking-wide lh-sm mb-3">
+            HUMAN DEVELOPMENT INDEX <br>
+            <span class="text-teal">PREDICTOR</span>
+        </h1>
+        <p class="lead text-secondary mb-4 fs-5">
+            Predict Human Development. Understand Progress. Support Better Decisions.
+        </p>
+        <p class="text-muted mb-4">
+            An advanced machine learning framework that evaluates critical social and economic growth indicators (Life Expectancy, Schooling, and GNI) to predict development tiers and empower global developmental policies.
+        </p>
+        <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start gap-3">
+            <a href="{{ url_for('main.register') }}" class="btn btn-teal px-4 py-3 btn-lg d-flex align-items-center justify-content-center" id="hero-get-started">
+                <i class="fa-solid fa-rocket me-2"></i> Get Started
+            </a>
+            <a href="{{ url_for('main.login') }}" class="btn btn-outline-teal px-4 py-3 btn-lg d-flex align-items-center justify-content-center" id="hero-login">
+                <i class="fa-solid fa-sign-in-alt me-2"></i> Login
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-6 text-center">
+        <!-- Dashboard Mockup Image generated inside card -->
+        <div class="card card-premium p-3 border-dark-glow position-relative overflow-hidden">
+            <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark-glass opacity-10"></div>
+            <div class="d-flex align-items-center justify-content-between border-bottom border-dark-glow pb-2 mb-3">
+                <div class="d-flex gap-1.5">
+                    <span class="d-inline-block bg-danger rounded-circle" style="width: 10px; height: 10px;"></span>
+                    <span class="d-inline-block bg-warning rounded-circle mx-1" style="width: 10px; height: 10px;"></span>
+                    <span class="d-inline-block bg-success rounded-circle" style="width: 10px; height: 10px;"></span>
+                </div>
+                <small class="text-muted text-uppercase tracking-wider">HDI Score Simulator</small>
+            </div>
+            <div class="p-4 text-start">
+                <h5 class="text-teal-light mb-3"><i class="fa-solid fa-chart-area me-2"></i> Development Metrics Analysis</h5>
+                <p class="text-muted small">Input parameters map to their corresponding weight factors optimized during model training to estimate index values between 0.0000 and 1.0000.</p>
+                
+                <div class="my-4">
+                    <label class="text-secondary small d-block mb-1">Life Expectancy (years)</label>
+                    <div class="progress bg-secondary" style="height: 8px;">
+                        <div class="progress-bar bg-teal" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="text-secondary small d-block mb-1">Education Level (schooling years)</label>
+                    <div class="progress bg-secondary" style="height: 8px;">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div>
+                    <label class="text-secondary small d-block mb-1">Gross National Income (GNI per Capita)</label>
+                    <div class="progress bg-secondary" style="height: 8px;">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Three Pillars Section -->
+<div class="py-5 border-top border-dark-glow">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold tracking-wide">THE THREE PILLARS OF HDI</h2>
+        <p class="text-secondary">The core dimensions used to compute the Human Development Index score.</p>
+    </div>
+    <div class="row g-4">
+        <!-- Health Pillar -->
+        <div class="col-md-4">
+            <div class="card card-premium h-100 p-4 border-dark-glow text-center">
+                <div class="mb-3">
+                    <span class="d-inline-flex p-3 rounded-circle bg-teal-glow text-teal fs-3">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </span>
+                </div>
+                <h4 class="fw-bold mb-2">Long and Healthy Life</h4>
+                <p class="text-muted small">Measured by **Life Expectancy at Birth**, assessing the overall longevity, healthcare infrastructure, and quality of life of a nation's citizenry.</p>
+            </div>
+        </div>
+        <!-- Education Pillar -->
+        <div class="col-md-4">
+            <div class="card card-premium h-100 p-4 border-dark-glow text-center">
+                <div class="mb-3">
+                    <span class="d-inline-flex p-3 rounded-circle bg-teal-glow text-teal fs-3">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </span>
+                </div>
+                <h4 class="fw-bold mb-2">Access to Knowledge</h4>
+                <p class="text-muted small">Measured by **Expected Years of Schooling** for children and **Mean Years of Schooling** for adults aged 25 and older, indicating educational standards and literacy rates.</p>
+            </div>
+        </div>
+        <!-- GNI Pillar -->
+        <div class="col-md-4">
+            <div class="card card-premium h-100 p-4 border-dark-glow text-center">
+                <div class="mb-3">
+                    <span class="d-inline-flex p-3 rounded-circle bg-teal-glow text-teal fs-3">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                    </span>
+                </div>
+                <h4 class="fw-bold mb-2">Decent Standard of Living</h4>
+                <p class="text-muted small">Measured by **Gross National Income (GNI) per Capita** (purchasing power parity, PPP$), evaluating average economic productivity and financial well-being.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="py-5 border-top border-dark-glow">
+    <div class="row align-items-center">
+        <div class="col-md-6 mb-4 mb-md-0">
+            <h2 class="fw-bold tracking-wide mb-4">SYSTEM FEATURES</h2>
+            <ul class="list-unstyled">
+                <li class="d-flex align-items-start mb-3">
+                    <i class="fa-solid fa-circle-check text-teal me-3 fs-5 mt-1"></i>
+                    <div>
+                        <h5 class="fw-bold mb-1">User Account Management</h5>
+                        <p class="text-muted small">Create a secure profile with hashed password credentials to keep your prediction history private and safe.</p>
+                    </div>
+                </li>
+                <li class="d-flex align-items-start mb-3">
+                    <i class="fa-solid fa-circle-check text-teal me-3 fs-5 mt-1"></i>
+                    <div>
+                        <h5 class="fw-bold mb-1">Linear Regression Prediction Engine</h5>
+                        <p class="text-muted small">Utilizes a machine learning model fitted on historical country indicators to estimate scores with over 98% accuracy.</p>
+                    </div>
+                </li>
+                <li class="d-flex align-items-start mb-3">
+                    <i class="fa-solid fa-circle-check text-teal me-3 fs-5 mt-1"></i>
+                    <div>
+                        <h5 class="fw-bold mb-1">Interactive User Dashboard</h5>
+                        <p class="text-muted small">Visualize summary cards of past simulations, classification distributions, and access core prediction tools quickly.</p>
+                    </div>
+                </li>
+                <li class="d-flex align-items-start">
+                    <i class="fa-solid fa-circle-check text-teal me-3 fs-5 mt-1"></i>
+                    <div>
+                        <h5 class="fw-bold mb-1">Prediction Logging</h5>
+                        <p class="text-muted small">Keep a permanent database history of all predicted records for comparative analysis over time.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-premium p-4 border-dark-glow">
+                <h5 class="text-teal-light mb-3"><i class="fa-solid fa-graduation-cap me-2"></i> Project Purpose</h5>
+                <p class="text-secondary small">
+                    This Human Development Index Predictor was developed for academic analysis, helping researchers, students, and policymakers understand how shifts in core welfare indices mathematically impact a nation's development classification.
+                </p>
+                <p class="text-muted small">
+                    Enter development variables to immediately see the output classified as Low, Medium, High, or Very High development based on standardized United Nations thresholds.
+                </p>
+                <a href="{{ url_for('main.about') }}" class="btn btn-outline-teal mt-2 d-inline-flex align-items-center justify-content-center w-100" id="home-learn-more">
+                    Learn More About HDI <i class="fa-solid fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Predict HDI - HDI Predictor{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-9 col-lg-8">
+        <div class="card card-premium p-4 border-dark-glow">
+            <div class="card-header-premium text-center">
+                <i class="fa-solid fa-wand-magic-sparkles text-teal fs-2 mb-3"></i>
+                <h3 class="fw-bold tracking-wide mb-1">PREDICT HDI</h3>
+                <p class="text-secondary small">Enter country indicators below to estimate the Human Development Index score and classification tier</p>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('main.predict') }}" method="POST" id="predict-form" class="needs-validation" novalidate>
+                    <!-- Row 1: Life Expectancy -->
+                    <div class="mb-4">
+                        <label for="life_expectancy" class="form-label form-label-premium">Life Expectancy at Birth (Years)</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark-glass border-secondary border-end-0 text-secondary">
+                                <i class="fa-solid fa-heart-pulse"></i>
+                            </span>
+                            <input type="number" step="0.01" min="20" max="100" class="form-control form-control-premium border-start-0" id="life_expectancy" name="life_expectancy" value="{{ life_expectancy or '' }}" placeholder="e.g. 78.4" required>
+                        </div>
+                        <div class="form-help d-flex justify-content-between">
+                            <span>Average number of years a newborn is expected to live.</span>
+                            <span class="text-teal font-semibold">Valid Range: 20 to 100</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Mean Years of Schooling -->
+                    <div class="mb-4">
+                        <label for="mean_years_schooling" class="form-label form-label-premium">Mean Years of Schooling (Years)</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark-glass border-secondary border-end-0 text-secondary">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </span>
+                            <input type="number" step="0.01" min="0" max="20" class="form-control form-control-premium border-start-0" id="mean_years_schooling" name="mean_years_schooling" value="{{ mean_years_schooling or '' }}" placeholder="e.g. 12.3" required>
+                        </div>
+                        <div class="form-help d-flex justify-content-between">
+                            <span>Average completed years of education among adults aged 25 and older.</span>
+                            <span class="text-teal font-semibold">Valid Range: 0 to 20</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Expected Years of Schooling -->
+                    <div class="mb-4">
+                        <label for="expected_years_schooling" class="form-label form-label-premium">Expected Years of Schooling (Years)</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark-glass border-secondary border-end-0 text-secondary">
+                                <i class="fa-solid fa-book-reader"></i>
+                            </span>
+                            <input type="number" step="0.01" min="0" max="25" class="form-control form-control-premium border-start-0" id="expected_years_schooling" name="expected_years_schooling" value="{{ expected_years_schooling or '' }}" placeholder="e.g. 15.6" required>
+                        </div>
+                        <div class="form-help d-flex justify-content-between">
+                            <span>Number of years of education a child of school entrance age is expected to receive.</span>
+                            <span class="text-teal font-semibold">Valid Range: 0 to 25</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 4: GNI per Capita -->
+                    <div class="mb-4">
+                        <label for="gni_per_capita" class="form-label form-label-premium">Gross National Income (GNI) per Capita ($)</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark-glass border-secondary border-end-0 text-secondary">
+                                <i class="fa-solid fa-dollar-sign"></i>
+                            </span>
+                            <input type="number" step="0.01" min="0.01" class="form-control form-control-premium border-start-0" id="gni_per_capita" name="gni_per_capita" value="{{ gni_per_capita or '' }}" placeholder="e.g. 45000.00" required>
+                        </div>
+                        <div class="form-help d-flex justify-content-between">
+                            <span>Gross National Income per person (Purchasing Power Parity, constant 2017 international $).</span>
+                            <span class="text-teal font-semibold">Must be positive</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="row pt-2">
+                        <div class="col-sm-6 mb-2 mb-sm-0">
+                            <button type="reset" class="btn btn-outline-teal w-100" id="btn-reset">
+                                <i class="fa-solid fa-rotate-right me-2"></i> Reset Inputs
+                            </button>
+                        </div>
+                        <div class="col-sm-6">
+                            <button type="submit" class="btn btn-teal w-100" id="btn-predict">
+                                <i class="fa-solid fa-calculator me-2"></i> Predict HDI Score
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
